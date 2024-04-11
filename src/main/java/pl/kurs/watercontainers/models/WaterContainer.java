@@ -2,6 +2,7 @@ package pl.kurs.watercontainers.models;
 
 import pl.kurs.watercontainers.exceptions.InvalidCapacityException;
 import pl.kurs.watercontainers.exceptions.InvalidLevelException;
+import pl.kurs.watercontainers.exceptions.InvalidWaterAmountException;
 
 import java.io.InvalidClassException;
 import java.io.Serializable;
@@ -29,6 +30,35 @@ public class WaterContainer implements Serializable {
             throw new InvalidLevelException("Invalid water level value!");
         }
         return new WaterContainer(name, maxCapacity, waterLevel);
+    }
+
+    public void addWater(double value) {
+        if (value <= 0) {
+            throw new InvalidWaterAmountException("Value should be more than 0!!");
+        }
+        if ((waterLevel + value) > maxCapacity) {
+            throw new InvalidWaterAmountException("Too much water to add to " + name + "!!");
+        }
+        waterLevel += value;
+
+    }
+
+    public void pourOutWater(double value) {
+        if (value <= 0) {
+            throw new InvalidWaterAmountException("Value should be more than 0!!");
+        }
+        if ((waterLevel - value) < 0) {
+            throw new InvalidWaterAmountException("Too much water to pur out from " + name + "!");
+        }
+        waterLevel -= value;
+    }
+
+    public void pourWater(WaterContainer destinationContainer, double value) {
+        if (value <= 0) {
+            throw new InvalidWaterAmountException("Value should be more than 0!!");
+        }
+        this.pourOutWater(value);
+        destinationContainer.addWater(value);
     }
 
     public String getName() {
