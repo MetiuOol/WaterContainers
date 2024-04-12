@@ -4,7 +4,7 @@ import pl.kurs.watercontainers.exceptions.InvalidCapacityException;
 import pl.kurs.watercontainers.exceptions.InvalidLevelException;
 import pl.kurs.watercontainers.exceptions.InvalidWaterAmountException;
 
-import java.io.InvalidClassException;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -60,6 +60,7 @@ public class WaterContainer implements Serializable {
         this.pourOutWater(value);
         destinationContainer.addWater(value);
     }
+
 
     public String getName() {
         return name;
