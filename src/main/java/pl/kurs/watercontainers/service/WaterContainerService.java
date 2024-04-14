@@ -34,4 +34,22 @@ public class WaterContainerService {
 
     }
 
+    public static WaterContainer[] getEmptyContainers(WaterContainer... containers) {
+        WaterContainer[] emptyWaterContainerArray = new WaterContainer[containers.length];
+        int indexEmptyWC = 0;
+        try {
+            for (WaterContainer container : containers) {
+                if (container.getWaterLevel() == 0) {
+                    emptyWaterContainerArray[indexEmptyWC++] = container;
+                }
+
+
+            }
+
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+        return emptyWaterContainerArray;
+    }
+
 }
