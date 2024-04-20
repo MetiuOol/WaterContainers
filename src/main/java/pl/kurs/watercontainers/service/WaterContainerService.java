@@ -4,52 +4,41 @@ import pl.kurs.watercontainers.models.WaterContainer;
 
 public class WaterContainerService {
 
-    public static WaterContainer getContainerWithHighestWaterLevel(WaterContainer[] containers) {
-        WaterContainer highestWaterLevelContainer = null;
-        try {
-            highestWaterLevelContainer = containers[0];
-            for (WaterContainer container : containers) {
-                if (highestWaterLevelContainer.getWaterLevel() < container.getWaterLevel())
-                    highestWaterLevelContainer = container;
-            }
-        } catch (RuntimeException e) {
-            e.printStackTrace();
+    public static WaterContainer getContainerWithHighestWaterLevel(WaterContainer... containers) {
+        WaterContainer highestWaterLevelContainer = containers[0];
+        for (WaterContainer container : containers) {
+            if (highestWaterLevelContainer.getWaterLevel() < container.getWaterLevel())
+                highestWaterLevelContainer = container;
         }
         return highestWaterLevelContainer;
-
     }
 
-    public static WaterContainer getTheMostFullContainer(WaterContainer... containers) {
-        WaterContainer theMostFullContainer = null;
-        try {
-            theMostFullContainer = containers[0];
-            for (WaterContainer container : containers) {
-                if ((theMostFullContainer.getWaterLevel() / theMostFullContainer.getMaxCapacity()) < (container.getWaterLevel() / container.getMaxCapacity()))
-                    theMostFullContainer = container;
-            }
-        } catch (RuntimeException e) {
-            e.printStackTrace();
+    public static WaterContainer getTheMostFilledContainer(WaterContainer... containers) {
+        WaterContainer theMostFilledContainer = containers[0];
+        for (WaterContainer container : containers) {
+            if ((theMostFilledContainer.getWaterLevel() / theMostFilledContainer.getMaxCapacity()) < (container.getWaterLevel() / container.getMaxCapacity()))
+                theMostFilledContainer = container;
         }
-        return theMostFullContainer;
-
+        return theMostFilledContainer;
     }
 
     public static WaterContainer[] getEmptyContainers(WaterContainer... containers) {
-        WaterContainer[] emptyWaterContainerArray = new WaterContainer[containers.length];
-        int indexEmptyWC = 0;
-        try {
-            for (WaterContainer container : containers) {
-                if (container.getWaterLevel() == 0) {
-                    emptyWaterContainerArray[indexEmptyWC++] = container;
-                }
-
-
+        int emptyContainersCounter = 0;
+        for (WaterContainer c : containers) {
+            if (c.getWaterLevel() == 0) {
+                emptyContainersCounter++;
             }
 
-        } catch (RuntimeException e) {
-            e.printStackTrace();
         }
-        return emptyWaterContainerArray;
+        WaterContainer[] emptyWaterContainersArray = new WaterContainer[emptyContainersCounter];
+        int index = 0;
+        for (int i = 0; i < containers.length; i++) {
+            if (containers[i].getWaterLevel() == 0) {
+                emptyWaterContainersArray[index++] = containers[i];
+            }
+
+        }
+        return emptyWaterContainersArray;
     }
 
 }
